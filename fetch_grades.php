@@ -9,7 +9,6 @@ $subjectFilter = isset($_GET['subject']) ? $_GET['subject'] : '';
 
 
 $sql = "
-
 SELECT 
     students.name AS student_name, 
     subjects.subject_name,
@@ -17,8 +16,6 @@ SELECT
 FROM grades
     JOIN students ON grades.student_id = students.id
     JOIN subjects ON grades.subject_id = subjects.id
-    
-
 ";
 //  VAI nu mes meklejam specifisku audzekni un/vai specifisku tikai prieksmetu
 $conditions = [];// seit es saglabasu visus musu mazos "noteikumus"
@@ -31,16 +28,16 @@ if(!empty($studentFilter)){
 }
 // ja kads izvelas tikai vienu noteiktu prieksmetu tad paradam tikai to prieksmetu
 if(!empty($subjectFilter)){
-    $conditions[] = "subjects.name = :subject";
+    $conditions[] = "subjects.subject_name = :subject";
     $params[':subject'] =$subjectFilter;  
 }
 // ja ir kadi noteikumi izveleti (audzeknis vai pireksmetu) 
 if(!empty($conditions)){
     // notiekumi tiek ideoti PC kas attelos attiecigo audzekni vai prieksmetu
-    $sql .= "WHERE" . implode("AND" , $conditions);
+    $sql .= " WHERE " . implode(" AND ", $conditions);
 }
 
-$sql .= "ORDER BY students.name, subjects.subject_name";
+$sql .= " ORDER BY students.name, subjects.subject_name";
 
 
 $stmt = $pdo->prepare($sql);
@@ -48,8 +45,8 @@ $stmt->execute($params);
 $grades = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
-$students = $pdo->query("SELECT name FORM students ORDER BY  name")->fetchAll(PDO::FETCH_COLUMN);
-$subjects = $pdo->query("SELECT subject_name FORM subjects ORDER BY  subject_name")->fetchAll(PDO::FETCH_COLUMN);
+$students = $pdo->query("SELECT name FROM students ORDER BY name")->fetchAll(PDO::FETCH_COLUMN);
+$subjects = $pdo->query("SELECT subject_name FROM subjects ORDER BY subject_name")->fetchAll(PDO::FETCH_COLUMN);
 
 
 ?>

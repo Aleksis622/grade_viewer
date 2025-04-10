@@ -35,6 +35,24 @@
   <a href="index.php" class="btn">🔄 Reset</a>
 </form>
 
+<h2 style="text-align:center; margin-top: 50px;">➕ Add New Student & Grade</h2>
+
+<form method="post" action="add_student.php" style="max-width: 500px; margin: 0 auto; text-align: center;">
+  <input type="text" name="new_student" placeholder="Student Name" required style="padding: 10px; margin-bottom: 10px; width: 100%;">
+
+  <select name="subject" style="padding: 10px; margin-bottom: 10px; width: 100%;">
+    <option value="">Choose Existing Subject</option>
+    <?php foreach ($subjects as $subject): ?>
+      <option value="<?= htmlspecialchars($subject) ?>"><?= htmlspecialchars($subject) ?></option>
+    <?php endforeach; ?>
+  </select>
+
+  <input type="text" name="new_subject" placeholder="Or Enter New Subject" style="padding: 10px; margin-bottom: 10px; width: 100%;">
+
+  <input type="number" name="grade" min="1" max="10" placeholder="Grade (1–10)" required style="padding: 10px; margin-bottom: 10px; width: 100%;">
+
+  <button class="btn" type="submit">✅ Add Student & Grade</button>
+</form>
 <table>
   <thead>
     <tr>
