@@ -29,7 +29,9 @@
         <?= htmlspecialchars($subject) ?>
       </option>
     <?php endforeach; ?>
+
   </select>
+ 
 
   <button class="btn" type="submit">🔍 Filter</button>
   <a href="index.php" class="btn">🔄 Reset</a>
@@ -53,6 +55,7 @@
 
   <button class="btn" type="submit">✅ Add Student & Grade</button>
 </form>
+
 <table>
   <thead>
     <tr>
@@ -61,6 +64,7 @@
       <th>Grade</th>
     </tr>
   </thead>
+  
   <tbody>
     <?php if (count($grades) > 0): ?>
       <?php foreach ($grades as $row): ?>
@@ -68,7 +72,37 @@
           <td><?= htmlspecialchars($row['student_name']) ?></td>
           <td><?= htmlspecialchars($row['subject_name']) ?></td>
           <td><?= htmlspecialchars($row['grade']) ?></td>
+          <td>
+  
+  <form action="update_grade.php" method="post" style="display:inline;">
+    <input type="hidden" name="student" value="<?= htmlspecialchars($row['student_name']) ?>">
+    <input type="hidden" name="subject" value="<?= htmlspecialchars($row['subject_name']) ?>">
+    <input type="number" name="grade" value="<?= htmlspecialchars($row['grade']) ?>" min="1" max="10" style="width: 50px;" required>
+    <button type="submit" class="btn">✏️ Update</button>
+  </form>
+
+  
+
+
+  <input type="text" name="new_student" value="<?= htmlspecialchars($row['student_name']) ?>" required>
+  <input type="text" name="new_subject" value="<?= htmlspecialchars($row['subject_name']) ?>" required>
+
+
+
+
+</form>
+
+<form action="delete_grade.php" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this grade?');">
+    <input type="hidden" name="student" value="<?= htmlspecialchars($row['student_name']) ?>">
+    <input type="hidden" name="subject" value="<?= htmlspecialchars($row['subject_name']) ?>">
+    <button type="submit" class="btn" style="background-color:#ff6666; color:white;">🗑️ Delete</button>
+  </form>
+
+
+</td>
+
         </tr>
+        
       <?php endforeach; ?>
     <?php else: ?>
       <tr><td colspan="3" style="text-align:center;">No data found.</td></tr>
